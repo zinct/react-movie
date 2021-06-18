@@ -1,16 +1,25 @@
 import React from 'react';
 
-const TableHeader = ({ columns, onSort }) => {
+const TableHeader = (props) => {
+
+  const { columns, onSort, sort } = props;
+
+  function renderSortIcon(column) {
+    if(column.path !== sort.path) return null;
+    if(sort.order === 'asc') return <i className="fa fa-sort-asc"></i>;
+    return <i className="fa fa-sort-desc"></i>;
+  }
+
   return (
     <thead>
       <tr>
         {columns.map(column => (
           <th 
-            onClick={() => onSort(column.direction)}
+            onClick={() => onSort(column.path)}
             style={{cursor: 'pointer'}}
-            key={column.direction || column.key}
+            key={column.path || column.key}
           >
-            {column.label}
+            {column.label} {renderSortIcon(column)}
           </th>
         ))}
       </tr>

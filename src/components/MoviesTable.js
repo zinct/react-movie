@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
-import Like from './common/Like';
 import _ from 'lodash';
+
+import Like from './common/Like';
 import TableHeader from './common/TableHeader';
 import TableBody from './common/TableBody';
 
-const MoviesTable = ({ movies, onLike, onDelete, sort: sortColumn }) => {
+const MoviesTable = (props) => {
+  const { movies, onLike, onDelete, sort: sortColumn } = props;
+
   const [sort, setSort] = useState(sortColumn);
-  const sortedMovies = _.orderBy(movies, [sort.direction], [sort.order]);
+  const sortedMovies = _.orderBy(movies, [sort.path], [sort.order]);
   const columns = [
-    { direction: '_id', label: 'No' },
-    { direction: 'title', label: 'Title' },
-    { direction: 'genre.name', label: 'Genre' },
-    { direction: 'stock', label: 'Stock' },
-    { direction: 'rate', label: 'Rate' },
+    { path: '_id', label: 'No' },
+    { path: 'title', label: 'Title' },
+    { path: 'genre.name', label: 'Genre' },
+    { path: 'stock', label: 'Stock' },
+    { path: 'rate', label: 'Rate' },
     { key: 'like', label: 'Like', 
       content: movie => <Like liked={movie.liked} onClick={() => onLike(movie)} /> },
     { key: 'actions', label: 'Actions', 
       content: movie => <button onClick={() => onDelete(movie)} className="btn btn-danger btn-sm">Delete</button> },
   ];
-
-  function handleSort(direction) {
-    if(direction === sort.direction)
-      setSort({ direction, order: sort.order === 'asc' ? 'desc' : 'asc' });
+  
+  function handleSort(path) {
+    if(path === sort.path)
+      setSort({ path, order: sort.order === 'asc' ? 'desc' : 'asc' });
     else    
-      setSort({ direction, order: 'asc' });
+      setSort({ path, order: 'asc' });
   }
 
   return (
     <table className="table table-striped mt-4">
       <TableHeader
         columns={columns}
+        sort={sort}
         onSort={handleSort}
       />
       <TableBody 
@@ -42,7 +46,7 @@ const MoviesTable = ({ movies, onLike, onDelete, sort: sortColumn }) => {
 };
 
 MoviesTable.defaultProps = {
-  sort: { direction: '_id', order: 'asc' },
+  sort: { path: '_id', order: 'asc' },
 }
 
 export default MoviesTable;
