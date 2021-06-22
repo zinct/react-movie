@@ -1,7 +1,7 @@
 const genres = [
-  { _id: 1, name: 'Action' },
-  { _id: 2, name: 'Scifi' },
-  { _id: 3, name: 'Thirell' },
+  { id: 1, name: 'Action' },
+  { id: 2, name: 'Scifi' },
+  { id: 3, name: 'Thirell' },
 ];
 
 export function getGenres() {

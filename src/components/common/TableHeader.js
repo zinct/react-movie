@@ -15,7 +15,7 @@ const TableHeader = (props) => {
       <tr>
         {columns.map(column => (
           <th 
-            onClick={() => onSort(column.path)}
+            onClick={() => column.disable || onSort(column.path)}
             style={{cursor: 'pointer'}}
             key={column.path || column.key}
           >

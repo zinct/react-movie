@@ -8,8 +8,15 @@ const ListGroup = ({ children, items, onItemSelect, textProperty, valueProperty,
       </div>
       <div className="card-body p-0">
         <ul className="list-group">
-          {items.map(genre => (
-            <li className={`list-group-item ${selectedItem === genre ? 'active' : ''}`} key={genre[valueProperty]} style={{cursor: 'pointer'}} onClick={() => onItemSelect(genre)}>{genre[textProperty]}</li>
+          {items.map(item => (
+            <li 
+              className={`list-group-item ${selectedItem === item ? 'active' : ''}`} 
+              key={item[valueProperty]} 
+              style={{cursor: 'pointer'}} 
+              onClick={() => onItemSelect(item)}
+            >
+              {item[textProperty]}
+            </li>
           ))}
         </ul>
       </div>
@@ -19,7 +26,7 @@ const ListGroup = ({ children, items, onItemSelect, textProperty, valueProperty,
 
 ListGroup.defaultProps = {
   textProperty: 'name',
-  valueProperty: '_id',
+  valueProperty: 'id',
 }
 
 export default ListGroup;
